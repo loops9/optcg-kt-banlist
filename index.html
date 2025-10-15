@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece TCG - Mazzi Bannati</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #e94560 0%, #c73659 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(233, 69, 96, 0.3);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .banned-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .ban-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ban-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e94560, #f39c12);
+        }
+
+        .ban-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+            border-color: #e94560;
+        }
+
+        .card-image-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #2d3561 0%, #1f2544 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .ban-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .deck-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #f39c12;
+        }
+
+        .ban-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95em;
+        }
+
+        .ban-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #e94560;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .banned-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ ONE PIECE TCG</h1>
+            <div class="subtitle">Mazzi Bannati - Torneo Settimanale</div>
+        </header>
+
+        <div id="bannedList" class="banned-grid"></div>
+    </div>
+
+    <script>
+        // CONFIGURAZIONE: Modifica questo array per aggiungere/rimuovere mazzi bannati
+        const bannedDecks = [
+            {
+                deckName: "Jewelry Bonney",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP07-019.png?250701",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Rob Lucci",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP07-079.png?250701",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Rob Lucci",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP07-079.png?250701",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Monkey D. Luffy",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP11-040.png?250701",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Roronoa Zoro",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP12-020.png?250718",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Enel",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP05-098.png?250701",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Silver Rayleigh",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP12-001.png?250718",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Sakazuki",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP05-041.png?250701",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Marshal D. Teach",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP09-081.png?250701",
+                banDate: "2025-10-15"
+            },
+            {
+                deckName: "Giuvan D. Cujò",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP09-081.png?250701",
+                banDate: "2025-10-15"
+            },
+
+            // Aggiungi altri mazzi qui seguendo lo stesso formato
+            // {
+            //     deckName: "Nome del Mazzo",
+            //     cardImage: "URL dell'immagine della carta",
+            //     banDate: "YYYY-MM-DD"
+            // }
+        ];
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('it-IT', options);
+        }
+
+        function renderBannedDecks() {
+            const container = document.getElementById('bannedList');
+            
+            if (bannedDecks.length === 0) {
+                container.innerHTML = '<div class="empty-state">Nessun mazzo bannato al momento</div>';
+                return;
+            }
+
+            // Ordina per data (più recente prima)
+            const sorted = [...bannedDecks].sort((a, b) => new Date(b.banDate) - new Date(a.banDate));
+
+            container.innerHTML = sorted.map(deck => `
+                <div class="ban-card">
+                    <div class="card-image-container">
+                        <img src="${deck.cardImage}" alt="${deck.deckName}" class="card-image" onerror="this.src='https://via.placeholder.com/300x420/1f2544/e94560?text=Immagine+Non+Disponibile'">
+                    </div>
+                    <div class="deck-name">${deck.deckName}</div>
+                    <div class="ban-date">
+                        <span class="ban-icon">🚫</span>
+                        <span>Bannato il ${formatDate(deck.banDate)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Renderizza i mazzi al caricamento della pagina
+        renderBannedDecks();
+    </script>
+</body>
+</html>
