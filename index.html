@@ -134,6 +134,13 @@
             color: rgba(255, 255, 255, 0.5);
             font-size: 1.2em;
         }
+        
+        .player-name {
+            margin-bottom: 8px;
+            font-size: 1em;
+            color: rgba(255, 255, 255, 0.85);
+            font-style: italic;
+        }
 
         @media (max-width: 768px) {
             h1 {
@@ -162,13 +169,27 @@
             {
                 deckName: "Imu",
                 cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP13-079.png?250701",
+                player: "Clarence",
                 banDate: "2025-01-13"
             },
             {
                 deckName: "Miok",
                 cardImage: "https://i.postimg.cc/mDpg0Ny0/6012589722460425149.jpg",
+                player: "L'Innominabile",
                 banDate: "2025-01-13"
-            },    
+            },   
+            {
+                deckName: "Doffy",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP14-060.png?250701",
+                player: "Mi vergogno a scriverlo",
+                banDate: "2025-01-20"
+            },
+            {
+                deckName: "Teach",
+                cardImage: "https://en.onepiece-cardgame.com/images/cardlist/card/OP09-081.png?250701",
+                player: "Clarence",
+                banDate: "2025-01-20"
+            },
                        
 
             // Aggiungi altri mazzi qui seguendo lo stesso formato
@@ -201,6 +222,7 @@
                         <img src="${deck.cardImage}" alt="${deck.deckName}" class="card-image" onerror="this.src='https://via.placeholder.com/300x420/1f2544/e94560?text=Immagine+Non+Disponibile'">
                     </div>
                     <div class="deck-name">${deck.deckName}</div>
+                    <div class="player-name">👤 ${deck.player}</div>
                     <div class="ban-date">
                         <span class="ban-icon">🚫</span>
                         <span>Bannato il ${formatDate(deck.banDate)}</span>
@@ -215,6 +237,7 @@
 </body>
 
 </html>
+
 
 
 
